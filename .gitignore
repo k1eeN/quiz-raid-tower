@@ -17,3 +17,13 @@ captures
 !*.xcworkspace/contents.xcworkspacedata
 **/xcshareddata/WorkspaceSettings.xcsettings
 node_modules/
+
+/AGENTS.md
+/.codex/
+/.agents/
+/docs/
+
+.env
+.env.*
+*.jks
+*.keystore

@@ -13,15 +13,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.resources.painterResource
+import org.koin.compose.viewmodel.koinViewModel
 
 import quizraidtower.app.composeapp.generated.resources.Res
 import quizraidtower.app.composeapp.generated.resources.compose_multiplatform
 
 @Composable
-@Preview
 fun App() {
+    koinViewModel<AppViewModel>()
     MaterialTheme {
         var showContent by remember { mutableStateOf(false) }
         Column(

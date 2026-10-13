@@ -32,10 +32,12 @@ kotlin {
     }
     
     sourceSets {
-        androidMain.dependencies {
-            implementation(libs.ktor.client.android)
-        }
         commonMain.dependencies {
+            implementation(project(":core:database"))
+            implementation(project(":feature:game:api"))
+            implementation(project(":feature:game:impl"))
+            implementation(project(":feature:home:api"))
+            implementation(project(":feature:home:impl"))
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)
             implementation(libs.compose.material3)
@@ -55,12 +57,7 @@ kotlin {
             implementation(libs.koin.compose.viewmodel)
 
             implementation(libs.kotlinx.coroutines.core)
-            implementation(libs.kotlinx.serialization.json)
             implementation(libs.kotlinx.datetime)
-
-            implementation(libs.ktor.client.core)
-            implementation(libs.ktor.client.contentNegotiation)
-            implementation(libs.ktor.serialization.kotlinx.json)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

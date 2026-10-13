@@ -1,4 +1,4 @@
-package dev.k1een.qrt.di
+package dev.k1een.qrt.core.database.di
 
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation

@@ -19,12 +19,17 @@ kotlin {
     commonMain {
       dependencies {
         implementation(libs.kotlin.stdlib)
+        implementation(libs.koin.core)
+        implementation(libs.ktor.client.core)
+        implementation(libs.ktor.client.contentNegotiation)
+        implementation(libs.ktor.serialization.kotlinx.json)
+        implementation(libs.kotlinx.serialization.json)
       }
     }
 
     androidMain {
       dependencies {
-        // Android-specific dependencies
+        implementation(libs.ktor.client.android)
       }
     }
   }

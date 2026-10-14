@@ -7,5 +7,5 @@ import kotlinx.serialization.Serializable
 internal data class TokenResponseDto(
     @SerialName("response_code") val responseCode: Int,
     @SerialName("response_message") val responseMessage: String,
-    val token: String? = null,
+    @SerialName("token") val token: String? = null,
 )

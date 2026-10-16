@@ -1,4 +1,4 @@
-package dev.k1een.qrt.feature.home.impl.ui
+package dev.k1een.qrt.feature.home.impl.presentation.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

@@ -7,10 +7,10 @@ import dev.k1een.qrt.feature.game.api.navigation.Battle
 import dev.k1een.qrt.feature.game.api.navigation.FloorCompleted
 import dev.k1een.qrt.feature.game.api.navigation.RaidResult
 import dev.k1een.qrt.feature.game.api.navigation.SetupRaid
-import dev.k1een.qrt.feature.game.impl.ui.BattleScreen
-import dev.k1een.qrt.feature.game.impl.ui.FloorCompletedScreen
-import dev.k1een.qrt.feature.game.impl.ui.RaidResultScreen
-import dev.k1een.qrt.feature.game.impl.ui.SetupRaidScreen
+import dev.k1een.qrt.feature.game.impl.presentation.ui.BattleScreen
+import dev.k1een.qrt.feature.game.impl.presentation.ui.FloorCompletedScreen
+import dev.k1een.qrt.feature.game.impl.presentation.ui.RaidResultScreen
+import dev.k1een.qrt.feature.game.impl.presentation.ui.SetupRaidScreen
 
 internal fun EntryProviderScope<NavKey>.gameEntries(navigator: Navigator) {
     entry<SetupRaid> {

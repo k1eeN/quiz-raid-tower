@@ -5,28 +5,20 @@ plugins {
 }
 
 kotlin {
-
     android {
         namespace = "dev.k1een.qrt.feature.home.api"
 
-      compileSdk {
-        version = release(37)
-      }
+        compileSdk {
+            version = release(37)
+        }
 
-      minSdk = 29
+        minSdk = 29
     }
 
-  sourceSets {
-    commonMain {
-      dependencies {
-        implementation(libs.kotlin.stdlib)
-      }
+    sourceSets {
+        commonMain.dependencies {
+            implementation(libs.kotlin.stdlib)
+            api(libs.androidx.navigation3.runtime)
+        }
     }
-
-    androidMain {
-      dependencies {
-        // Android-specific dependencies
-      }
-    }
-  }
 }

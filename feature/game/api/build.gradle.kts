@@ -16,16 +16,9 @@ kotlin {
     }
 
     sourceSets {
-        commonMain {
-            dependencies {
-                implementation(libs.kotlin.stdlib)
-            }
-        }
-
-        androidMain {
-            dependencies {
-                // Android-specific dependencies
-            }
+        commonMain.dependencies {
+            implementation(libs.kotlin.stdlib)
+            api(libs.androidx.navigation3.runtime)
         }
     }
 }

@@ -1,32 +1,34 @@
 plugins {
+    alias(libs.plugins.composeMultiplatform)
+    alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidMultiplatformLibrary)
     alias(libs.plugins.androidLint)
 }
 
 kotlin {
-
     android {
         namespace = "dev.k1een.qrt.feature.home.impl"
 
-      compileSdk {
-        version = release(37)
-      }
+        compileSdk {
+            version = release(37)
+        }
 
-      minSdk = 29
+        minSdk = 29
     }
 
-  sourceSets {
-    commonMain {
-      dependencies {
-        implementation(libs.kotlin.stdlib)
-      }
+    sourceSets {
+        commonMain.dependencies {
+            implementation(project(":core:navigation"))
+            implementation(project(":feature:home:api"))
+            implementation(project(":feature:game:api"))
+            implementation(libs.kotlin.stdlib)
+            implementation(libs.compose.runtime)
+            implementation(libs.compose.foundation)
+            implementation(libs.compose.ui)
+            implementation(libs.compose.material3)
+            implementation(libs.koin.core)
+            implementation(libs.androidx.navigation3.runtime)
+        }
     }
-
-    androidMain {
-      dependencies {
-        // Android-specific dependencies
-      }
-    }
-  }
 }

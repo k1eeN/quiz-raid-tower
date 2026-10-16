@@ -34,6 +34,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(project(":core:database"))
+            implementation(project(":core:navigation"))
             implementation(project(":feature:game:api"))
             implementation(project(":feature:game:impl"))
             implementation(project(":feature:home:api"))
@@ -47,10 +48,8 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(libs.androidx.lifecycle.viewmodel)
-            implementation(libs.androidx.lifecycle.viewmodelNavigation3)
 
             implementation(libs.androidx.navigation3.runtime)
-            implementation(libs.androidx.navigation3.ui)
 
             implementation(libs.koin.core)
             implementation(libs.koin.compose)

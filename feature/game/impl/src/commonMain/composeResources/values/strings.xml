@@ -1,0 +1,11 @@
+<resources>
+    <string name="raid_setup">Raid setup</string>
+    <string name="next">Next</string>
+    <string name="battle">Battle</string>
+    <string name="result">Result</string>
+    <string name="floor_completed">Floor completed</string>
+    <string name="next_battle">Next battle</string>
+    <string name="raid_result">Raid result</string>
+    <string name="home">Home</string>
+    <string name="new_raid">New raid</string>
+</resources>

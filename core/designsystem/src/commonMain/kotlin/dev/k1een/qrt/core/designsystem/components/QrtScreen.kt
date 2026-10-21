@@ -1,0 +1,68 @@
+package dev.k1een.qrt.core.designsystem.components
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import dev.k1een.qrt.core.designsystem.resources.Res
+import dev.k1een.qrt.core.designsystem.resources.brand_name
+import dev.k1een.qrt.core.designsystem.resources.home_wordmark
+import dev.k1een.qrt.core.designsystem.resources.qrt_mark
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
+
+@Composable
+fun QrtScreen(
+    background: DrawableResource,
+    modifier: Modifier = Modifier,
+    content: @Composable BoxScope.() -> Unit,
+) {
+    Box(modifier = modifier.fillMaxSize()) {
+        Image(
+            painter = painterResource(background),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop,
+        )
+        content()
+    }
+}
+
+@Composable
+fun QrtWordmark(
+    compact: Boolean,
+    modifier: Modifier = Modifier,
+) {
+    Image(
+        painter = painterResource(
+            if (compact) Res.drawable.qrt_mark else Res.drawable.home_wordmark,
+        ),
+        contentDescription = stringResource(Res.string.brand_name),
+        modifier = modifier,
+    )
+}
+
+@Composable
+fun ReadingScrim(
+    modifier: Modifier = Modifier,
+    content: @Composable BoxScope.() -> Unit,
+) {
+    Box(
+        modifier = modifier.background(
+            Brush.verticalGradient(
+                0f to Color(0x00010812),
+                .17f to Color(0xCC010812),
+                .86f to Color(0xD9010812),
+                1f to Color(0x85010812),
+            ),
+        ),
+        content = content,
+    )
+}

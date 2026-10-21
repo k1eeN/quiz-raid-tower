@@ -23,8 +23,6 @@ kotlin {
             api(libs.compose.runtime)
             api(libs.compose.ui)
             api(libs.androidx.navigation3.runtime)
-            api(libs.koin.core)
-            implementation(libs.koin.compose)
             implementation(libs.androidx.navigation3.ui)
             implementation(libs.androidx.lifecycle.viewmodelNavigation3)
         }

@@ -15,11 +15,17 @@ kotlin {
         }
 
         minSdk = 29
+        androidResources {
+            enable = true
+        }
     }
 
     sourceSets {
+        androidMain.dependencies {
+            implementation(libs.compose.uiTooling)
+        }
         commonMain.dependencies {
-            implementation(project(":core:navigation"))
+            implementation(project(":core:designsystem"))
             implementation(project(":feature:home:api"))
             implementation(project(":feature:game:api"))
             implementation(libs.kotlin.stdlib)
@@ -28,7 +34,17 @@ kotlin {
             implementation(libs.compose.ui)
             implementation(libs.compose.material3)
             implementation(libs.koin.core)
+            implementation(libs.koin.compose.viewmodel)
+            implementation(libs.androidx.lifecycle.viewmodel)
+            implementation(libs.androidx.lifecycle.runtimeCompose)
+            implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.compose.components.resources)
+            implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.navigation3.runtime)
         }
     }
+}
+
+compose.resources {
+    packageOfResClass = "dev.k1een.qrt.feature.home.impl.resources"
 }

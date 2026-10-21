@@ -16,17 +16,21 @@ kotlin {
         }
 
         minSdk = 29
+        androidResources {
+            enable = true
+        }
     }
 
     sourceSets {
         commonMain.dependencies {
-            implementation(project(":core:navigation"))
             implementation(project(":feature:game:api"))
             implementation(project(":core:database"))
             implementation(libs.kotlin.stdlib)
             implementation(libs.compose.runtime)
+            implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(libs.compose.foundation)
             implementation(libs.compose.ui)
+            implementation(libs.compose.components.resources)
             implementation(libs.compose.material3)
             implementation(libs.koin.core)
             implementation(libs.androidx.navigation3.runtime)
@@ -34,4 +38,8 @@ kotlin {
             implementation(libs.kotlinx.serialization.json)
         }
     }
+}
+
+compose.resources {
+    packageOfResClass = "dev.k1een.qrt.feature.game.impl.resources"
 }

@@ -35,6 +35,7 @@ kotlin {
         commonMain.dependencies {
             implementation(project(":core:database"))
             implementation(project(":core:navigation"))
+            implementation(project(":core:designsystem"))
             implementation(project(":feature:game:api"))
             implementation(project(":feature:game:impl"))
             implementation(project(":feature:home:api"))
@@ -50,6 +51,8 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
 
             implementation(libs.androidx.navigation3.runtime)
+            implementation(libs.androidx.savedstate.compose)
+            implementation(libs.kotlinx.serialization.core)
 
             implementation(libs.koin.core)
             implementation(libs.koin.compose)

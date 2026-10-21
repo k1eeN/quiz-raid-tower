@@ -1,0 +1,10 @@
+<resources>
+    <string name="preparing_title">Preparing your adventure</string>
+    <string name="preparing_copy">Getting the tower ready\nfor your next adventure.</string>
+    <string name="start_error_title">Unable to start</string>
+    <string name="start_error_copy">We couldn’t prepare the app.\nPlease try again\nor go to Home.</string>
+    <string name="retry">Retry</string>
+    <string name="go_home">Home</string>
+    <string name="brand_name">Quiz Raid: Tower</string>
+    <string name="button_preview_label">Primary action</string>
+</resources>

@@ -1,0 +1,19 @@
+<resources>
+    <string name="start_raid">Start raid</string>
+    <string name="statistics">Statistics</string>
+    <string name="back">Home</string>
+    <string name="best_floor">Best floor</string>
+    <string name="best_result">Best result</string>
+    <string name="correct_answers_detail">correct answers</string>
+    <string name="progress">Your progress</string>
+    <string name="total_raids">Total raids</string>
+    <string name="correct_answers">Correct answers</string>
+    <string name="accuracy">Accuracy</string>
+    <string name="by_category">By category</string>
+    <string name="history">History</string>
+    <string name="science">Science</string>
+    <string name="geography">Geography</string>
+    <string name="statistics_footer">Every raid makes you stronger.</string>
+    <string name="empty_title">Your journey starts here</string>
+    <string name="empty_copy">Complete your first raid\nto see your progress.</string>
+</resources>

@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.androidMultiplatformLibrary)
     alias(libs.plugins.androidLint)
 }
@@ -19,6 +20,7 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.kotlin.stdlib)
             api(libs.androidx.navigation3.runtime)
+            api(libs.kotlinx.serialization.core)
         }
     }
 }

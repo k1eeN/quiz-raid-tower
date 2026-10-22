@@ -10,6 +10,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.k1een.qrt.core.designsystem.resources.Res
 import dev.k1een.qrt.core.designsystem.resources.playfair_bold
@@ -27,6 +28,14 @@ object QrtColors {
     val Teal = Color(0xFF1BCFC4)
     val Track = Color(0xFF394D5B)
     val Ink = Color(0xFF211706)
+    val Danger = Color(0xFFB95E55)
+}
+
+object QrtSizes {
+    val MinTouchTarget = 48.dp
+    val NavigationIcon = 24.dp
+    val CompactWordmarkWidth = 87.dp
+    val CompactWordmarkHeight = 47.45.dp
 }
 
 @Composable

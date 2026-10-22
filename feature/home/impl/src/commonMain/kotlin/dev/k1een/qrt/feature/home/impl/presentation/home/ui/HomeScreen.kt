@@ -41,15 +41,20 @@ import dev.k1een.qrt.core.designsystem.components.QrtWordmark
 import dev.k1een.qrt.core.designsystem.components.ReadingScrim
 import dev.k1een.qrt.core.designsystem.theme.QrtColors
 import dev.k1een.qrt.core.designsystem.theme.QrtTheme
+import dev.k1een.qrt.feature.home.impl.presentation.home.mappers.HomeUiMapper
+import dev.k1een.qrt.feature.home.impl.presentation.home.models.HomeState
 import dev.k1een.qrt.feature.home.impl.presentation.home.models.HomeUiState
 import dev.k1een.qrt.feature.home.impl.resources.Res
-import dev.k1een.qrt.feature.home.impl.resources.best_floor
-import dev.k1een.qrt.feature.home.impl.resources.best_result
-import dev.k1een.qrt.feature.home.impl.resources.correct_answers_detail
-import dev.k1een.qrt.feature.home.impl.resources.home_environment
 import dev.k1een.qrt.feature.home.impl.resources.start_raid
 import dev.k1een.qrt.feature.home.impl.resources.statistics
 import org.jetbrains.compose.resources.stringResource
+
+private val LogoMinTopPadding = 57.dp
+private val LogoTopInset = 9.dp
+private val WordmarkMaxWidth = 301.dp
+private val WordmarkHeight = 104.dp
+private val RecordIconSize = 30.dp
+private val RecordDividerWidth = .7.dp
 
 @Composable
 internal fun HomeScreen(
@@ -61,7 +66,7 @@ internal fun HomeScreen(
     val safeTop = WindowInsets.safeDrawing.asPaddingValues().calculateTopPadding()
 
     QrtScreen(
-        background = Res.drawable.home_environment,
+        background = state.background,
         modifier = modifier,
     ) {
         BoxWithConstraints(
@@ -78,13 +83,13 @@ internal fun HomeScreen(
                     .heightIn(min = maxHeight),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Spacer(modifier = Modifier.height(maxOf(57.dp, safeTop + 9.dp)))
+                Spacer(modifier = Modifier.height(maxOf(LogoMinTopPadding, safeTop + LogoTopInset)))
                 QrtWordmark(
                     compact = false,
                     modifier = Modifier
-                        .widthIn(max = 301.dp)
+                        .widthIn(max = WordmarkMaxWidth)
                         .fillMaxWidth()
-                        .height(104.dp),
+                        .height(WordmarkHeight),
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 ReadingScrim(modifier = Modifier.fillMaxWidth()) {
@@ -131,21 +136,16 @@ private fun HomeRecords(
     Box(modifier = modifier.heightIn(min = 71.dp)) {
         Row(modifier = Modifier.fillMaxWidth()) {
             Record(
-                value = state.bestFloor,
-                caption = stringResource(Res.string.best_floor),
-                icon = QrtIcon.Tower,
+                state = state.bestFloor,
                 modifier = Modifier
                     .weight(1f)
                     .padding(start = 19.dp),
             )
             Record(
-                value = state.bestResult,
-                caption = stringResource(Res.string.best_result),
-                icon = QrtIcon.Trophy,
+                state = state.bestResult,
                 modifier = Modifier
                     .weight(1f)
                     .padding(start = 14.5.dp),
-                detail = stringResource(Res.string.correct_answers_detail),
             )
         }
         Canvas(
@@ -159,7 +159,7 @@ private fun HomeRecords(
                 color = QrtColors.Rule,
                 start = Offset(x, 0f),
                 end = Offset(x, size.height),
-                strokeWidth = .7.dp.toPx(),
+                strokeWidth = RecordDividerWidth.toPx(),
             )
             val y = 25.dp.toPx()
             val diamond = Path().apply {
@@ -180,30 +180,27 @@ private fun HomeRecords(
 
 @Composable
 private fun Record(
-    value: String,
-    caption: String,
-    icon: QrtIcon,
+    state: HomeUiState.RecordUiModel,
     modifier: Modifier = Modifier,
-    detail: String? = null,
 ) {
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.Top,
     ) {
         QrtIconImage(
-            icon = icon,
+            icon = state.icon,
             contentDescription = null,
             modifier = Modifier
                 .padding(top = 4.dp)
-                .size(30.dp),
+                .size(RecordIconSize),
         )
         Spacer(modifier = Modifier.width(12.dp))
         Column {
-            Text(text = value, style = MaterialTheme.typography.displaySmall)
-            Text(text = caption, style = MaterialTheme.typography.bodySmall)
-            if (detail != null) {
+            Text(text = state.value, style = MaterialTheme.typography.displaySmall)
+            Text(text = stringResource(state.caption), style = MaterialTheme.typography.bodySmall)
+            state.detail?.let { detail ->
                 Text(
-                    text = detail,
+                    text = stringResource(detail),
                     style = MaterialTheme.typography.labelMedium,
                     color = QrtColors.Muted,
                 )
@@ -217,10 +214,13 @@ private fun Record(
 private fun HomeRecordsPreview() {
     QrtTheme {
         HomeScreen(
-            state = HomeUiState(
-                records = HomeUiState.RecordsUiModel(
-                    bestFloor = "5 / 5",
-                    bestResult = "17 / 17",
+            state = HomeUiMapper()(
+                HomeState(
+                    records = HomeState.RecordsState(
+                        bestFloor = 5,
+                        bestResultCorrect = 17,
+                        bestResultAnswers = 17,
+                    ),
                 ),
             ),
             onStartRaid = {},
@@ -235,12 +235,7 @@ private fun HomeRecordsPreview() {
 private fun HomeEmptyPreview() {
     QrtTheme {
         HomeScreen(
-            state = HomeUiState(
-                records = HomeUiState.RecordsUiModel(
-                    bestFloor = "—",
-                    bestResult = "—",
-                ),
-            ),
+            state = HomeUiMapper()(HomeState()),
             onStartRaid = {},
             onStatistics = {},
         )

@@ -7,7 +7,10 @@ import kotlinx.serialization.Serializable
 data object SetupRaid : NavKey
 
 @Serializable
-data object Battle : NavKey
+data class Battle(
+    val categoryId: Int? = null,
+    val difficulty: String = "medium",
+) : NavKey
 
 @Serializable
 data object FloorCompleted : NavKey

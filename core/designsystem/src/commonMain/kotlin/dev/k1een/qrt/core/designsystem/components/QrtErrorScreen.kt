@@ -33,6 +33,7 @@ import dev.k1een.qrt.core.designsystem.resources.retry
 import dev.k1een.qrt.core.designsystem.resources.start_error_copy
 import dev.k1een.qrt.core.designsystem.resources.start_error_title
 import dev.k1een.qrt.core.designsystem.theme.QrtColors
+import dev.k1een.qrt.core.designsystem.theme.QrtSizes
 import dev.k1een.qrt.core.designsystem.theme.QrtTheme
 import org.jetbrains.compose.resources.stringResource
 
@@ -41,6 +42,8 @@ fun QrtErrorScreen(
     onRetry: () -> Unit,
     onHome: () -> Unit,
     modifier: Modifier = Modifier,
+    title: String = stringResource(Res.string.start_error_title),
+    description: String = stringResource(Res.string.start_error_copy),
 ) {
     val safeTop = WindowInsets.safeDrawing.asPaddingValues().calculateTopPadding()
 
@@ -66,8 +69,8 @@ fun QrtErrorScreen(
                 QrtWordmark(
                     compact = true,
                     modifier = Modifier
-                        .width(87.dp)
-                        .height(47.45.dp),
+                        .width(QrtSizes.CompactWordmarkWidth)
+                        .height(QrtSizes.CompactWordmarkHeight),
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 ReadingScrim(modifier = Modifier.fillMaxWidth()) {
@@ -78,13 +81,15 @@ fun QrtErrorScreen(
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
                         Text(
-                            text = stringResource(Res.string.start_error_title),
+                            text = title,
+                            modifier = Modifier.padding(horizontal = 24.dp),
                             style = MaterialTheme.typography.displayMedium,
                             textAlign = TextAlign.Center,
                         )
                         Spacer(modifier = Modifier.height(12.dp))
                         Text(
-                            text = stringResource(Res.string.start_error_copy),
+                            text = description,
+                            modifier = Modifier.padding(horizontal = 24.dp),
                             style = MaterialTheme.typography.bodyLarge,
                             color = QrtColors.Muted,
                             textAlign = TextAlign.Center,

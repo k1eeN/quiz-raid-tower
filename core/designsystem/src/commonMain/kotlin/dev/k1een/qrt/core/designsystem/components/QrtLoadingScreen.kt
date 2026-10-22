@@ -34,6 +34,7 @@ import dev.k1een.qrt.core.designsystem.resources.loading_environment
 import dev.k1een.qrt.core.designsystem.resources.preparing_copy
 import dev.k1een.qrt.core.designsystem.resources.preparing_title
 import dev.k1een.qrt.core.designsystem.theme.QrtColors
+import dev.k1een.qrt.core.designsystem.theme.QrtSizes
 import dev.k1een.qrt.core.designsystem.theme.QrtTheme
 import org.jetbrains.compose.resources.stringResource
 
@@ -63,8 +64,8 @@ fun QrtLoadingScreen(modifier: Modifier = Modifier) {
                 QrtWordmark(
                     compact = true,
                     modifier = Modifier
-                        .width(87.dp)
-                        .height(47.45.dp),
+                        .width(QrtSizes.CompactWordmarkWidth)
+                        .height(QrtSizes.CompactWordmarkHeight),
                 )
                 Spacer(modifier = Modifier.height(115.55.dp))
                 TowerAnimation(

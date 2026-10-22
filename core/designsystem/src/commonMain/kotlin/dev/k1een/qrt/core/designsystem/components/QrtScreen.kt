@@ -18,6 +18,13 @@ import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
+private val ReadingScrimBrush = Brush.verticalGradient(
+    0f to Color(0x00010812),
+    .17f to Color(0xCC010812),
+    .86f to Color(0xD9010812),
+    1f to Color(0x85010812),
+)
+
 @Composable
 fun QrtScreen(
     background: DrawableResource,
@@ -55,14 +62,7 @@ fun ReadingScrim(
     content: @Composable BoxScope.() -> Unit,
 ) {
     Box(
-        modifier = modifier.background(
-            Brush.verticalGradient(
-                0f to Color(0x00010812),
-                .17f to Color(0xCC010812),
-                .86f to Color(0xD9010812),
-                1f to Color(0x85010812),
-            ),
-        ),
+        modifier = modifier.background(ReadingScrimBrush),
         content = content,
     )
 }

@@ -5,6 +5,7 @@ import dev.k1een.qrt.core.database.di.localModule
 import dev.k1een.qrt.core.database.di.networkModule
 import dev.k1een.qrt.core.database.di.repositoryModule
 import dev.k1een.qrt.feature.game.impl.di.gameNetworkModule
+import dev.k1een.qrt.feature.game.impl.di.gamePresentationModule
 import dev.k1een.qrt.feature.game.impl.di.gameRepositoryModule
 import dev.k1een.qrt.feature.game.impl.di.gameUseCaseModule
 import dev.k1een.qrt.feature.home.impl.di.homePresentationModule
@@ -15,7 +16,7 @@ import org.koin.dsl.module
 internal val appModule = module {
     includes(networkModule, localModule, repositoryModule)
     includes(gameNetworkModule, gameRepositoryModule, gameUseCaseModule)
-    includes(homePresentationModule)
+    includes(homePresentationModule, gamePresentationModule)
     factory { AppUiMapper() }
     viewModel {
         AppViewModel(

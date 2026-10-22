@@ -48,6 +48,7 @@ import dev.k1een.qrt.core.designsystem.components.QrtPrimaryButton
 import dev.k1een.qrt.core.designsystem.components.QrtScreen
 import dev.k1een.qrt.core.designsystem.components.ReadingScrim
 import dev.k1een.qrt.core.designsystem.theme.QrtColors
+import dev.k1een.qrt.core.designsystem.theme.QrtSizes
 import dev.k1een.qrt.core.designsystem.theme.QrtTheme
 import dev.k1een.qrt.feature.home.impl.presentation.statistics.mappers.StatisticsUiMapper
 import dev.k1een.qrt.feature.home.impl.presentation.statistics.models.StatisticsState
@@ -60,10 +61,18 @@ import dev.k1een.qrt.feature.home.impl.resources.empty_title
 import dev.k1een.qrt.feature.home.impl.resources.progress
 import dev.k1een.qrt.feature.home.impl.resources.start_raid
 import dev.k1een.qrt.feature.home.impl.resources.statistics
-import dev.k1een.qrt.feature.home.impl.resources.statistics_empty_environment
-import dev.k1een.qrt.feature.home.impl.resources.statistics_environment
 import dev.k1een.qrt.feature.home.impl.resources.statistics_footer
 import org.jetbrains.compose.resources.stringResource
+
+private val HeaderMinBaseline = 109.dp
+private val HeaderTopInset = 48.dp
+private val HeaderMinHeight = 136.dp
+private val MetricsMinWidth = 290.dp
+private val MetricsMaxTrailingSpace = 43.dp
+private val MetricsFirstRowMinHeight = 94.dp
+private val MetricsSecondRowMinHeight = 80.dp
+private val CategoryRowHeight = 61.dp
+private val DividerWidth = .7.dp
 
 @Composable
 internal fun StatisticsScreen(
@@ -72,14 +81,8 @@ internal fun StatisticsScreen(
     onStartRaid: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val empty = state.content is StatisticsUiState.Content.Empty
-
     QrtScreen(
-        background = if (empty) {
-            Res.drawable.statistics_empty_environment
-        } else {
-            Res.drawable.statistics_environment
-        },
+        background = state.background,
         modifier = modifier,
     ) {
         BoxWithConstraints(
@@ -115,20 +118,20 @@ internal fun StatisticsScreen(
 @Composable
 private fun StatisticsHeader(onBack: () -> Unit) {
     val safeTop = WindowInsets.safeDrawing.asPaddingValues().calculateTopPadding()
-    val titleBaseline = maxOf(109.dp, safeTop + 48.dp)
+    val titleBaseline = maxOf(HeaderMinBaseline, safeTop + HeaderTopInset)
 
-    Box(modifier = Modifier.fillMaxWidth().heightIn(min = 136.dp)) {
+    Box(modifier = Modifier.fillMaxWidth().heightIn(min = HeaderMinHeight)) {
         Box(
             modifier = Modifier
                 .padding(start = 12.dp, top = maxOf(36.dp, safeTop))
-                .size(48.dp)
+                .size(QrtSizes.MinTouchTarget)
                 .clickable(role = Role.Button, onClick = onBack),
             contentAlignment = Alignment.Center,
         ) {
             QrtIconImage(
                 icon = QrtIcon.Back,
                 contentDescription = stringResource(Res.string.back),
-                modifier = Modifier.size(24.dp),
+                modifier = Modifier.size(QrtSizes.NavigationIcon),
             )
         }
         Column(
@@ -160,13 +163,13 @@ private fun StatisticsOrnament(modifier: Modifier = Modifier) {
             color = QrtColors.Rule,
             start = Offset(0f, y),
             end = Offset(center - 8.dp.toPx(), y),
-            strokeWidth = .7.dp.toPx(),
+            strokeWidth = DividerWidth.toPx(),
         )
         drawLine(
             color = QrtColors.Rule,
             start = Offset(center + 8.dp.toPx(), y),
             end = Offset(size.width, y),
-            strokeWidth = .7.dp.toPx(),
+            strokeWidth = DividerWidth.toPx(),
         )
         val diamond = Path().apply {
             moveTo(center, y - 3.5.dp.toPx())
@@ -242,11 +245,8 @@ private fun StatisticsContent(state: StatisticsUiState.Content.Populated) {
                 style = MaterialTheme.typography.headlineLarge,
             )
             Spacer(modifier = Modifier.height(14.dp))
-            state.categories.forEachIndexed { index, category ->
-                CategoryRow(
-                    state = category,
-                    showDivider = index < state.categories.lastIndex,
-                )
+            state.categories.forEach { category ->
+                CategoryRow(state = category)
             }
             Text(
                 text = stringResource(Res.string.statistics_footer),
@@ -262,26 +262,39 @@ private fun StatisticsContent(state: StatisticsUiState.Content.Populated) {
 }
 
 @Composable
-private fun StatisticsMetrics(metrics: List<StatisticsUiState.MetricUiModel>) {
+private fun StatisticsMetrics(metrics: StatisticsUiState.MetricsUiModel) {
     BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
-        val trailingInset = (maxWidth - 290.dp).coerceIn(0.dp, 43.dp) / 2
+        val trailingInset = (maxWidth - MetricsMinWidth).coerceIn(0.dp, MetricsMaxTrailingSpace) / 2
         Column {
-            metrics.chunked(2).forEachIndexed { rowIndex, row ->
-                Row(modifier = Modifier.fillMaxWidth()) {
-                    row.forEachIndexed { column, metric ->
-                        val metricModifier = Modifier
-                            .weight(1f)
-                            .heightIn(min = if (rowIndex == 0) 94.dp else 80.dp)
-                        Metric(
-                            state = metric,
-                            modifier = if (column == 1) {
-                                metricModifier.padding(start = trailingInset)
-                            } else {
-                                metricModifier
-                            },
-                        )
-                    }
-                }
+            Row(modifier = Modifier.fillMaxWidth()) {
+                Metric(
+                    state = metrics.totalRaids,
+                    modifier = Modifier
+                        .weight(1f)
+                        .heightIn(min = MetricsFirstRowMinHeight),
+                )
+                Metric(
+                    state = metrics.bestFloor,
+                    modifier = Modifier
+                        .weight(1f)
+                        .heightIn(min = MetricsFirstRowMinHeight)
+                        .padding(start = trailingInset),
+                )
+            }
+            Row(modifier = Modifier.fillMaxWidth()) {
+                Metric(
+                    state = metrics.correctAnswers,
+                    modifier = Modifier
+                        .weight(1f)
+                        .heightIn(min = MetricsSecondRowMinHeight),
+                )
+                Metric(
+                    state = metrics.accuracy,
+                    modifier = Modifier
+                        .weight(1f)
+                        .heightIn(min = MetricsSecondRowMinHeight)
+                        .padding(start = trailingInset),
+                )
             }
         }
         Canvas(modifier = Modifier.matchParentSize()) {
@@ -289,13 +302,13 @@ private fun StatisticsMetrics(metrics: List<StatisticsUiState.MetricUiModel>) {
                 color = QrtColors.Rule,
                 start = Offset(size.width / 2, 13.dp.toPx()),
                 end = Offset(size.width / 2, size.height - 16.dp.toPx()),
-                strokeWidth = .7.dp.toPx(),
+                strokeWidth = DividerWidth.toPx(),
             )
             drawLine(
                 color = QrtColors.Rule,
                 start = Offset(0f, 89.dp.toPx()),
                 end = Offset(size.width, 89.dp.toPx()),
-                strokeWidth = .7.dp.toPx(),
+                strokeWidth = DividerWidth.toPx(),
             )
         }
     }
@@ -335,14 +348,11 @@ private fun Metric(
 }
 
 @Composable
-private fun CategoryRow(
-    state: StatisticsUiState.CategoryUiModel,
-    showDivider: Boolean,
-) {
+private fun CategoryRow(state: StatisticsUiState.CategoryUiModel) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(61.dp),
+            .height(CategoryRowHeight),
     ) {
         Row(
             modifier = Modifier
@@ -387,12 +397,12 @@ private fun CategoryRow(
                 }
             }
         }
-        if (showDivider) {
+        if (state.isDividerVisible) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .offset(y = 50.dp)
-                    .height(.7.dp)
+                    .height(DividerWidth)
                     .background(QrtColors.Rule),
             )
         }
@@ -431,7 +441,7 @@ private fun StatisticsPopulatedPreview() {
 private fun StatisticsEmptyPreview() {
     QrtTheme {
         StatisticsScreen(
-            state = StatisticsUiState(content = StatisticsUiState.Content.Empty),
+            state = StatisticsUiMapper()(StatisticsState()),
             onBack = {},
             onStartRaid = {},
         )

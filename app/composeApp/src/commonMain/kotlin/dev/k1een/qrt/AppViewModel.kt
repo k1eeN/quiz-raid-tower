@@ -45,6 +45,12 @@ internal class AppViewModel(
     fun onAction(action: AppAction) {
         when (action) {
             AppAction.Load -> loadSessionToken()
+            AppAction.RetryClicked -> {
+                if (state.value.state == AppState.State.Error) {
+                    loadSessionToken()
+                }
+            }
+
             AppAction.HomeClicked -> {
                 if (state.value.state == AppState.State.Error) {
                     updateState { state ->

@@ -22,7 +22,15 @@ kotlin {
     }
 
     sourceSets {
+        androidMain.dependencies {
+            implementation(libs.compose.uiTooling)
+        }
         commonMain.dependencies {
+            implementation(project(":core:designsystem"))
+            implementation(libs.koin.compose.viewmodel)
+            implementation(libs.androidx.lifecycle.viewmodel)
+            implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.compose.uiToolingPreview)
             implementation(project(":feature:game:api"))
             implementation(project(":core:database"))
             implementation(libs.kotlin.stdlib)

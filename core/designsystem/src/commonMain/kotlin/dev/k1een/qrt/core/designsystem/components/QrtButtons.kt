@@ -39,9 +39,29 @@ import dev.k1een.qrt.core.designsystem.resources.go_home
 import dev.k1een.qrt.core.designsystem.resources.primary_gold_plate
 import dev.k1een.qrt.core.designsystem.resources.retry
 import dev.k1een.qrt.core.designsystem.theme.QrtColors
+import dev.k1een.qrt.core.designsystem.theme.QrtSizes
 import dev.k1een.qrt.core.designsystem.theme.QrtTheme
 import org.jetbrains.compose.resources.imageResource
 import org.jetbrains.compose.resources.stringResource
+
+private const val DISABLED_ALPHA = .55f
+private const val PLATE_SOURCE_LEFT = 44
+private const val PLATE_SOURCE_TOP = 32
+private const val PLATE_SOURCE_WIDTH = 1292
+private const val PLATE_SOURCE_HEIGHT = 192
+private val GoldFrame = Brush.verticalGradient(
+    0f to Color(0xFFFFE9B0),
+    .16f to Color(0xFFF6C966),
+    .38f to Color(0xFFB87523),
+    .62f to Color(0xFFF6CB66),
+    .82f to Color(0xFF7D4917),
+    1f to Color(0xFFFFE6A5),
+)
+private val OuterStroke = Color(0xFF5F3B14)
+private val InnerHighlight = Color(0xFFFFE9A5)
+private val FaceStroke = Color(0xFF895717)
+private val EdgeHighlight = Color(0xCCFFE0A0)
+private val FaceInset = 6.dp
 
 @Composable
 fun QrtPrimaryButton(
@@ -56,7 +76,7 @@ fun QrtPrimaryButton(
     Box(
         modifier = modifier
             .heightIn(min = 56.dp)
-            .alpha(if (enabled) 1f else .55f)
+            .alpha(if (enabled) 1f else DISABLED_ALPHA)
             .clip(CutCornerShape(10.dp))
             .clickable(enabled = enabled, role = Role.Button, onClick = onClick),
         contentAlignment = Alignment.Center,
@@ -78,51 +98,42 @@ fun QrtPrimaryButton(
                     lineTo(left, top + cut)
                     close()
                 }
-            val gold =
-                Brush.verticalGradient(
-                    0f to Color(0xFFFFE9B0),
-                    .16f to Color(0xFFF6C966),
-                    .38f to Color(0xFFB87523),
-                    .62f to Color(0xFFF6CB66),
-                    .82f to Color(0xFF7D4917),
-                    1f to Color(0xFFFFE6A5),
-                )
-            drawPath(path = outline(0f, 10.dp.toPx()), brush = gold)
+            drawPath(path = outline(0f, 10.dp.toPx()), brush = GoldFrame)
             drawPath(
                 path = outline(.5.dp.toPx(), 10.dp.toPx()),
-                color = Color(0xFF5F3B14),
+                color = OuterStroke,
                 style = Stroke(width = 1.dp.toPx()),
             )
-            val face = outline(6.dp.toPx(), 4.dp.toPx())
+            val face = outline(FaceInset.toPx(), 4.dp.toPx())
             clipPath(face) {
-                val ratio = (size.width - 12.dp.toPx()) / (size.height - 12.dp.toPx())
-                val sourceWidth = minOf(1292f, 192f * ratio)
-                val sourceHeight = minOf(192f, 1292f / ratio)
+                val ratio = (size.width - FaceInset.toPx() * 2) / (size.height - FaceInset.toPx() * 2)
+                val sourceWidth = minOf(PLATE_SOURCE_WIDTH.toFloat(), PLATE_SOURCE_HEIGHT * ratio)
+                val sourceHeight = minOf(PLATE_SOURCE_HEIGHT.toFloat(), PLATE_SOURCE_WIDTH / ratio)
                 drawImage(
                     image = material,
                     srcOffset =
                         IntOffset(
-                            (44 + (1292 - sourceWidth) / 2).toInt(),
-                            (32 + (192 - sourceHeight) / 2).toInt(),
+                            (PLATE_SOURCE_LEFT + (PLATE_SOURCE_WIDTH - sourceWidth) / 2).toInt(),
+                            (PLATE_SOURCE_TOP + (PLATE_SOURCE_HEIGHT - sourceHeight) / 2).toInt(),
                         ),
                     srcSize = IntSize(sourceWidth.toInt(), sourceHeight.toInt()),
-                    dstOffset = IntOffset(6.dp.roundToPx(), 6.dp.roundToPx()),
+                    dstOffset = IntOffset(FaceInset.roundToPx(), FaceInset.roundToPx()),
                     dstSize =
                         IntSize(
-                            (size.width - 12.dp.toPx()).toInt(),
-                            (size.height - 12.dp.toPx()).toInt(),
+                            (size.width - FaceInset.toPx() * 2).toInt(),
+                            (size.height - FaceInset.toPx() * 2).toInt(),
                         ),
                 )
             }
             drawPath(
                 path = outline(2.dp.toPx(), 8.dp.toPx()),
-                color = Color(0xFFFFE9A5),
+                color = InnerHighlight,
                 style = Stroke(width = 1.dp.toPx()),
             )
-            drawPath(path = face, color = Color(0xFF895717), style = Stroke(width = .8.dp.toPx()))
+            drawPath(path = face, color = FaceStroke, style = Stroke(width = .8.dp.toPx()))
             for (y in listOf(10.dp.toPx(), size.height - 10.dp.toPx())) {
                 drawLine(
-                    color = Color(0xCCFFE0A0),
+                    color = EdgeHighlight,
                     start = Offset(10.dp.toPx(), y),
                     end = Offset(size.width - 10.dp.toPx(), y),
                     strokeWidth = .7.dp.toPx(),
@@ -173,8 +184,8 @@ fun QrtTextButton(
 ) {
     Row(
         modifier = modifier
-            .heightIn(min = 48.dp)
-            .alpha(if (enabled) 1f else .55f)
+            .heightIn(min = QrtSizes.MinTouchTarget)
+            .alpha(if (enabled) 1f else DISABLED_ALPHA)
             .clickable(enabled = enabled, role = Role.Button, onClick = onClick)
             .padding(horizontal = 10.dp),
         verticalAlignment = Alignment.CenterVertically,

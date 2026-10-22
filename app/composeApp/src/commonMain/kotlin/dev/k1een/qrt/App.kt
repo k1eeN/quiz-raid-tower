@@ -70,7 +70,7 @@ fun App() {
             when (uiState.state) {
                 AppUiState.State.Loading -> QrtLoadingScreen()
                 AppUiState.State.Error -> QrtErrorScreen(
-                    onRetry = { viewModel.onAction(AppAction.Load) },
+                    onRetry = { viewModel.onAction(AppAction.RetryClicked) },
                     onHome = { viewModel.onAction(AppAction.HomeClicked) },
                 )
 

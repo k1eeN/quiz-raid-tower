@@ -21,16 +21,8 @@ import dev.k1een.qrt.feature.game.impl.resources.new_raid
 import dev.k1een.qrt.feature.game.impl.resources.next
 import dev.k1een.qrt.feature.game.impl.resources.next_battle
 import dev.k1een.qrt.feature.game.impl.resources.raid_result
-import dev.k1een.qrt.feature.game.impl.resources.raid_setup
 import dev.k1een.qrt.feature.game.impl.resources.result
 import org.jetbrains.compose.resources.stringResource
-
-@Composable
-internal fun SetupRaidScreen(onNext: () -> Unit) {
-    MockGameScreen(stringResource(Res.string.raid_setup)) {
-        Button(onClick = onNext) { Text(stringResource(Res.string.next)) }
-    }
-}
 
 @Composable
 internal fun BattleScreen(onNext: () -> Unit, onResult: () -> Unit) {

@@ -1,5 +1,4 @@
 <resources>
-    <string name="raid_setup">Raid setup</string>
     <string name="next">Next</string>
     <string name="battle">Battle</string>
     <string name="result">Result</string>
@@ -8,4 +7,17 @@
     <string name="raid_result">Raid result</string>
     <string name="home">Home</string>
     <string name="new_raid">New raid</string>
+    <string name="setup_title">Prepare for raid</string>
+    <string name="setup_subtitle">Choose a topic and difficulty</string>
+    <string name="setup_category">Question category</string>
+    <string name="setup_difficulty">Difficulty</string>
+    <string name="setup_all_topics">All topics</string>
+    <string name="setup_easy">Easy</string>
+    <string name="setup_medium">Medium</string>
+    <string name="setup_hard">Hard</string>
+    <string name="setup_summary">5 floors · 1 boss</string>
+    <string name="setup_start">Start raid</string>
+    <string name="setup_back">Back</string>
+    <string name="setup_error_title">Unable to load categories</string>
+    <string name="setup_error_copy">Please check your connection and try again.</string>
 </resources>
